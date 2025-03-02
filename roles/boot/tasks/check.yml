@@ -1,0 +1,5 @@
+---
+- name: Check if grub is installed already
+  ansible.builtin.stat:
+    path: '{{ grub_check_file }}'
+  register: grub_installed

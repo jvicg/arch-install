@@ -10,7 +10,7 @@ BIOS_FIRMWARE_FILE=/usr/share/qemu/bios-256k.bin
 
 # Machine specs
 CORES=2
-MEM="2G"
+MEM="4G"
 BOOT_TYPE="d" 
 VDA_SIZE=40G
 FIRMWARE_FILE=$BIOS_FIRMWARE_FILE  # BIOS is set as the default boot mode
@@ -67,13 +67,14 @@ main() {
     done
 
     # Create disk if doesn't exist
-    [ ! -f $VDA ] && qemu-img create -f qcow $VDA $VDA_SIZE >/dev/null
+    [ ! -f $VDA ] && qemu-img create -f qcow2 -o compat=1.1 $VDA $VDA_SIZE >/dev/null
 
     # Run the virtual machine
     qemu-system-x86_64 \
         -m $MEM -smp $CORES -enable-kvm -cpu host -boot $BOOT_TYPE \
-        -cdrom $ISO -hda $VDA -netdev user,id=net0,hostfwd=tcp::2222-:22 \
-        -device e1000,netdev=net0 \
+        -cdrom $ISO -drive file=$VDA,if=virtio,format=qcow2 \
+        -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+        -device virtio-net-pci,netdev=net0 \
         -bios $FIRMWARE_FILE \
         -spice port=5900,addr=127.0.0.1,disable-ticketing=on -device qxl & disown
 

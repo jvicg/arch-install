@@ -1,0 +1,8 @@
+---
+- name: Generate locale
+  ansible.builtin.command: '{{ command.locale_gen }}'
+  changed_when: true
+
+- name: Create the initramfs image
+  ansible.builtin.command: '{{ command.mkinitcpio }}'
+  changed_when: true

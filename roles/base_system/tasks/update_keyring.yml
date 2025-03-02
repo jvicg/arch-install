@@ -1,0 +1,6 @@
+---
+- name: Update Arch Linux keyring to avoid errors in some versions
+  community.general.pacman:
+    name: archlinux-keyring
+    state: latest
+    update_cache: true

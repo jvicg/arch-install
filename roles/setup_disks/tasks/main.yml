@@ -5,3 +5,4 @@
 - ansible.builtin.import_tasks: calc_lv_sizes.yml
 - ansible.builtin.import_tasks: init_lvm.yml
 - ansible.builtin.import_tasks: partitions_format.yml
+- ansible.builtin.import_tasks: mount.yml

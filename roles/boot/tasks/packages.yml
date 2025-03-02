@@ -1,0 +1,4 @@
+---
+- name: Install package dependencies
+  ansible.builtin.command: '{{ grub_packages_command }}'
+  changed_when: true

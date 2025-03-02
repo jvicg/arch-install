@@ -1,0 +1,10 @@
+---
+- ansible.builtin.import_tasks: check.yml
+- ansible.builtin.import_tasks: packages.yml
+  when: not grub_installed.stat.exists
+- ansible.builtin.import_tasks: grub_install_efi.yml
+  when: not grub_installed.stat.exists and boot_mode == 'efi'
+- ansible.builtin.import_tasks: grub_install_bios.yml
+  when: not grub_installed.stat.exists and boot_mode == 'bios'
+- ansible.builtin.import_tasks: grub_mkconfig.yml
+  when: not grub_installed.stat.exists

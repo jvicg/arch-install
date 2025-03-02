@@ -1,0 +1,16 @@
+---
+- name: Set the time zone
+  ansible.builtin.file:
+    src: '{{ timezone_file }}'
+    dest: '{{ file.localtime }}'
+    state: link
+
+- name: Check if the hardware was already synchronized
+  ansible.builtin.stat:
+    path: '{{ file.hardware_clock }}'
+  register: hardware_clock_exists
+
+- name: Set the hardware clock
+  ansible.builtin.command: '{{ command.hwclock }}'
+  when: not hardware_clock_exists.stat.exists
+  changed_when: true

@@ -1,0 +1,4 @@
+---
+- name: Install grub for BIOS
+  ansible.builtin.command: '{{ grub_bios_install_command }}'
+  changed_when: true

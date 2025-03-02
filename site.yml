@@ -1,7 +1,8 @@
 ---
-- name: Install Arch Linux
+- name: Install the base system
   hosts:
-    - target
-  become: true
+    - localhost
   roles:
     - setup_disks
+    - base_system
+    - boot

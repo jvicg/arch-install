@@ -1,0 +1,32 @@
+---
+hostname: archlinux  # (dynamic var)
+locale: en_US.UTF-8  # (dynamic var)
+
+file:
+  release: '{{ system_root }}/etc/arch-release'
+  fstab: '{{ system_root }}/etc/fstab'
+  localtime: '{{ system_root }}/etc/localtime'
+  hardware_clock: '{{ system_root }}/etc/adjtime'
+  hostname: '{{ system_root }}/etc/hostname'
+  locale_gen: '{{ system_root }}/etc/locale.gen'
+  mkinitcpio: '{{ system_root }}/etc/mkinitcpio.conf'
+
+base_system_packages:
+  - base
+  - base-devel
+  - linux
+  - linux-firmware
+  - lvm2
+  - python
+
+command:
+  pacstrap: 'pacstrap -K {{ system_root }} {{ base_system_packages | join(" ") }}'
+  genfstab: 'genfstab -U {{ system_root }}'
+  hwclock: '{{ chroot_command }} hwclock --systohc'
+  locale_gen: '{{ chroot_command }} locale-gen'
+  mkinitcpio: '{{ chroot_command }} mkinitcpio -P'
+
+timezone:
+  region: Europe  # (dynamic var)
+  city: Madrid  # (dynamic var)
+timezone_file: '{{ system_root }}/usr/share/zoneinfo/{{ timezone.region }}/{{ timezone.city }}'

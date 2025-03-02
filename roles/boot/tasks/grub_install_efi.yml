@@ -1,0 +1,4 @@
+---
+- name: Install grub for EFI
+  ansible.builtin.command: '{{ grub_efi_install_command }}'
+  changed_when: true

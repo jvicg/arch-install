@@ -1,0 +1,19 @@
+---
+targets:
+  hosts:
+    localhost:
+      ansible_host: localhost
+      # ansible_connection: local
+      ansible_port: 2222
+      ansible_ssh_user: root
+      ansible_ssh_pass: 12
+    chroot:
+      ansible_host: /mnt
+      ansible_chroot_exe: arch-chroot
+      ansible_chroot_disable_root_check: true
+      ansible_connection: community.general.chroot
+  vars:
+    disk: /dev/vda  # (dynamic var)
+    system_root: /mnt
+    chroot_command: 'arch-chroot {{ system_root }}'
+    ansible_python_interpreter: /usr/bin/python

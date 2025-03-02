@@ -1,0 +1,8 @@
+---
+- ansible.builtin.import_tasks: update_keyring.yml
+- ansible.builtin.import_tasks: pactrap.yml
+- ansible.builtin.import_tasks: genfstab.yml
+- ansible.builtin.import_tasks: timezone.yml
+- ansible.builtin.import_tasks: hostname.yml
+- ansible.builtin.import_tasks: locale_gen.yml
+- ansible.builtin.import_tasks: mkinitcpio.yml

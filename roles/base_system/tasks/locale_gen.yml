@@ -1,0 +1,9 @@
+---
+- name: Edit locale.gen file
+  ansible.builtin.lineinfile:
+    path: '{{ file.locale_gen }}'
+    regexp: '^#.*{{ locale }}'
+    line: '{{ locale }}'
+    state: present
+  notify:
+    - Generate locale

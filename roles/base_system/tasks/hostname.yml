@@ -1,0 +1,7 @@
+---
+- name: Set the hostname
+  ansible.builtin.lineinfile:
+    path: '{{ file.hostname }}'
+    line: '{{ hostname }}'
+    create: true
+    mode: '0644'
