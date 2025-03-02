@@ -1,0 +1,5 @@
+---
+- name: Check if the machine has Internet connection
+  ansible.builtin.uri:
+    url: '{{ check_net_url }}'
+    method: GET

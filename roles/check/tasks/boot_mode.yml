@@ -1,0 +1,9 @@
+---
+- name: Check the boot mode of the machine
+  ansible.builtin.stat:
+    path: '{{ efi_info_file }}'
+  register: file_stat
+
+- name: Register the machine boot mode
+  ansible.builtin.set_fact:
+    boot_mode: '{{ "efi" if file_stat.stat.exists else "bios" }}'

@@ -1,0 +1,7 @@
+---
+- name: Install Arch Linux
+  hosts:
+    - target
+  become: true
+  roles:
+    - setup_disks

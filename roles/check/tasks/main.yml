@@ -1,0 +1,4 @@
+---
+- ansible.builtin.import_tasks: net_connection.yml
+- ansible.builtin.import_tasks: boot_mode.yml
+- ansible.builtin.import_tasks: sync_clock.yml

@@ -1,0 +1,5 @@
+---
+- name: Initialize the SWAP partition
+  community.general.filesystem:
+    dev: '{{ swap_partition_device }}'
+    fstype: swap

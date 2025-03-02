@@ -1,0 +1,4 @@
+---
+efi_info_file: /sys/firmware/efi/fw_platform_size
+check_net_url: https://archlinux.org
+time_service: systemd-timesyncd
