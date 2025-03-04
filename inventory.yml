@@ -3,12 +3,9 @@ targets:
   hosts:
     localhost:
       ansible_host: localhost
-      # ansible_connection: local
-      ansible_port: 2222
-      ansible_ssh_user: root
-      ansible_ssh_pass: 12
+      ansible_connection: local
     chroot:
-      ansible_host: /mnt
+      ansible_host: '{{ system_root }}'
       ansible_chroot_exe: arch-chroot
       ansible_chroot_disable_root_check: true
       ansible_connection: community.general.chroot
