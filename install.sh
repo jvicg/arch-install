@@ -37,7 +37,7 @@ rollback() {
 }
 
 ex() {
-    # Function to run a command that and exit the script if errors occur (used to execute commands that can potentially fail)
+    # Function to run a command and exit the script if errors occur (used to execute commands that can potentially fail)
     "$@" &  
     PROCESS_PID="$!"   
     wait "$PROCESS_PID"
@@ -110,6 +110,7 @@ main() {
 
     # Extends the size of tmpfs to ensure it has enough space to clone the repository and install Ansible
     ex mount -o remount,size=${TMP_DIR_SIZE} ${TMP_DIR} 
+    cd ${TMP_DIR}  # Change to tmp directory to avoid issues if the script is runned on ${INSTALLATION_DIR}
 
     # Get the repository without using git
     mkdir -p ${INSTALLATION_DIR}
