@@ -10,6 +10,7 @@ file:
   hostname: '{{ system_root }}/etc/hostname'
   locale_gen: '{{ system_root }}/etc/locale.gen'
   mkinitcpio: '{{ system_root }}/etc/mkinitcpio.conf'
+  sudoers: '{{ system_root }}/etc/sudoers'
 
 base_system_packages:
   - base
@@ -18,6 +19,11 @@ base_system_packages:
   - linux-firmware
   - lvm2
   - python
+  - git
+
+network_manager:
+  package: networkmanager
+  service: NetworkManager
 
 command:
   pacstrap: 'pacstrap -K {{ system_root }} {{ base_system_packages | join(" ") }}'

@@ -1,0 +1,7 @@
+---
+- name: Install boot package dependencies
+  community.general.pacman:
+    name: '{{ grub_package_dependencies }}'
+    state: present
+    update_cache: true
+  delegate_to: chroot

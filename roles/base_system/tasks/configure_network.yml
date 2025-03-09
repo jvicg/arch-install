@@ -1,0 +1,8 @@
+---
+- name: Install network manager
+  community.general.pacman:
+    name: '{{ network_manager.package }}'
+    state: present
+    update_cache: true
+  notify: Enable network manager
+  delegate_to: chroot

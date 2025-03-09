@@ -5,7 +5,7 @@
     dest: '{{ file.localtime }}'
     state: link
 
-- name: Check if the hardware was already synchronized
+- name: Check if the hardware clock was already synchronized
   ansible.builtin.stat:
     path: '{{ file.hardware_clock }}'
   register: hardware_clock_exists
