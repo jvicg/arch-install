@@ -1,0 +1,34 @@
+---
+- name: Clone paru repository
+  ansible.builtin.git:
+    repo: '{{ paru.repo }}'
+    dest: '{{ paru.install_dir }}'
+    version: '{{ paru.git_branch }}'
+    single_branch: true
+    update: true
+  become: true
+  become_user: '{{ user.name }}'
+
+# All the information related to paru will be obtained reading the file PKGBUILD
+- name: Read the PKGBUILD file
+  ansible.builtin.set_fact:
+    pkgbuild_info: "{{ lookup('file', pkgbuild_file) }}"
+
+- name: Register the dependencies
+  ansible.builtin.set_fact:
+    makedepends: '{{ pkgbuild_info | regex_findall("\nmakedepends=\(([^\n]+)\)") }}'
+    depends: '{{ pkgbuild_info | regex_findall("\ndepends=\(([^\n]+)\)") | first | split(" ") | list }}'
+
+- name: Concatenate makedepends and depends vars
+  ansible.builtin.set_fact:
+    all_depends: '{{ makedepends + depends }}'
+
+- name: Remove quotes from the dependencies values
+  ansible.builtin.set_fact:
+    all_depends: "{{ all_depends | regex_replace(\"'\", \"\") }}"
+
+- name: Install paru dependencies
+  community.general.pacman:
+    name: '{{ all_depends }}'
+    state: present
+    update_cache: true

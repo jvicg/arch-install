@@ -1,0 +1,6 @@
+---
+- name: Enable services
+  ansible.builtin.service:
+    name: '{{ item.value.service }}'
+    enabled: true
+  loop: '{{ package | dict2items | selectattr("value.service", "defined") | list }}'

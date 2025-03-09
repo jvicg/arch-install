@@ -1,0 +1,39 @@
+---
+# Most of these vars will be obtained through the user input
+package:  # (dynamic var)
+  desktop_environment:
+    name: gnome
+    service: gdm
+  shell:
+    name: bash
+  terminal:
+    name: alacritty
+  editor:
+    name: neovim
+  visual_editor:
+    name: code
+  navigator:
+    name: firefox
+
+user:
+  name: user1 # (dynamic var)
+  password: $6$IrxAh2Pm5LYZacEW$8ChtQyiYgsWuC471lyI5J0G8quwhTYJD94fvg.3.8deANXpz6rhZZ6KQaopHnX3KYJ/wAORm0V6pnSP9KkRW01  # (dynamic var)
+  shell: /usr/bin/{{ package.shell.name }}
+  groups:
+    - wheel
+    - network
+    - audio
+    - video
+    - storage
+    - power
+    - users
+
+paru:
+  bin: /usr/bin/paru
+  install_dir: /home/{{ user.name }}/paru
+  repo: https://aur.archlinux.org/paru-git.git
+  command: makepkg -C --noconfirm
+  git_branch: master
+  depends:
+    - cargo
+pkgbuild_file: '/mnt/{{ paru.install_dir }}/PKGBUILD'

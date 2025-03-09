@@ -1,0 +1,8 @@
+---
+- name: Install packages
+  community.general.pacman:
+    name: '{{ item.value.name }}'
+    state: present
+    update_cache: true
+  loop: '{{ package | dict2items }}'
+  notify: Enable services
