@@ -9,9 +9,9 @@ UEFI_FIRMWARE_FILE=/usr/share/ovmf/x64/OVMF.4m.fd
 BIOS_FIRMWARE_FILE=/usr/share/qemu/bios-256k.bin
 
 # Machine specs
-CORES=2
-MEM="4G"
-BOOT_TYPE="d" 
+CORES=4
+MEM="8G"
+BOOT_TYPE="c" 
 VDA_SIZE=40G
 FIRMWARE_FILE=$BIOS_FIRMWARE_FILE  # BIOS is set as the default boot mode
 
@@ -71,9 +71,11 @@ main() {
 
     # Run the virtual machine
     qemu-system-x86_64 \
-        -m $MEM -smp $CORES -enable-kvm -cpu host -boot $BOOT_TYPE \
+        -m $MEM -smp $CORES -enable-kvm -cpu host -boot order=$BOOT_TYPE \
         -cdrom $ISO -drive file=$VDA,if=virtio,format=qcow2 \
-        -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+        -netdev user,id=net1,hostfwd=tcp::2222-:22 \
+        -device virtio-net-pci,netdev=net1 \
+        -netdev bridge,br=virbr0,id=net0 \
         -device virtio-net-pci,netdev=net0 \
         -bios $FIRMWARE_FILE \
         -spice port=5900,addr=127.0.0.1,disable-ticketing=on -device qxl & disown
