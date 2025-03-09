@@ -1,8 +1,14 @@
 ---
 - name: Install the base system
   hosts:
-    - localhost
+    - arch_iso
   roles:
     - setup_disks
     - base_system
     - boot
+
+- name: Setup the desktop environment
+  hosts:
+    - chroot
+  roles:
+    - desktop_environment
