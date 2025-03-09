@@ -1,11 +1,11 @@
 ---
 targets:
   hosts:
-    localhost:
+    arch_iso:
       ansible_host: localhost
       ansible_connection: local
     chroot:
-      ansible_host: '{{ system_root }}'
+      ansible_host: /mnt
       ansible_chroot_exe: arch-chroot
       ansible_chroot_disable_root_check: true
       ansible_connection: community.general.chroot
