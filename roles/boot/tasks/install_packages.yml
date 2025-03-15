@@ -4,4 +4,4 @@
     name: '{{ grub_package_dependencies }}'
     state: present
     update_cache: true
-  delegate_to: chroot
+  delegate_to: arch_chroot

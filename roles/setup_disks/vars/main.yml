@@ -1,5 +1,5 @@
 ---
-partition_scheme: '{{ "msdos" if boot_mode == "bios" else "gpt" }}'  # Partition scheme used
+partition_scheme: '{{ "msdos" if fact_boot_mode == "bios" else "gpt" }}'  # Partition scheme used
 standard_fstype: ext4  # Default filesystem format for the home and root partitions (dynamic var?)
 parted_unit: MiB  # Unit used by parted to create partitions
 
@@ -11,12 +11,12 @@ boot_partition:
 boot_partition_device: '{{ disk ~ boot_partition.number }}'
 
 swap_partition:
-  number: '{{ 1 if boot_mode == "bios" else 2 }}'
+  number: '{{ 1 if fact_boot_mode == "bios" else 2 }}'
   size: 4096  # Size on MiB (dynamic var)
 swap_partition_device: '{{ disk ~ swap_partition.number }}'
 
 lvm_partition:
-  number: '{{ 2 if boot_mode == "bios" else 3 }}'
+  number: '{{ 2 if fact_boot_mode == "bios" else 3 }}'
   size: 100%  # (dynamic var)
   vg:
     name: vg0  # (dynamic var)

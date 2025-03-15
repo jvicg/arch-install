@@ -1,14 +1,16 @@
 ---
 - name: Generate locale
-  ansible.builtin.command: '{{ command.locale_gen }}'
+  ansible.builtin.command:
+    cmd: '{{ command.locale_gen }}'
   changed_when: true
 
 - name: Create the initramfs image
-  ansible.builtin.command: '{{ command.mkinitcpio }}'
+  ansible.builtin.command:
+    cmd: '{{ command.mkinitcpio }}'
   changed_when: true
 
 - name: Enable network manager
   ansible.builtin.service:
     name: '{{ network_manager.service }}'
     enabled: true
-  delegate_to: chroot
+  delegate_to: arch_chroot

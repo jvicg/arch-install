@@ -3,6 +3,6 @@
 - ansible.builtin.import_tasks: install_packages.yml
 - ansible.builtin.import_tasks: paru_check.yml
 - ansible.builtin.import_tasks: paru_dependencies.yml
-  when: not paru_bin_stat.stat.exists
+  when: not register_paru_stat.stat.exists
 - ansible.builtin.import_tasks: paru_install.yml
-  when: not paru_bin_stat.stat.exists
+  when: not register_paru_stat.stat.exists

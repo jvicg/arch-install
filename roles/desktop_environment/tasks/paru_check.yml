@@ -2,4 +2,4 @@
 - name: Check if paru binary is already installed
   ansible.builtin.stat:
     path: '{{ paru.bin }}'
-  register: paru_bin_stat
+  register: register_paru_stat

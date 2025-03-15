@@ -13,4 +13,4 @@
   community.general.filesystem:
     dev: '{{ boot_partition_device }}'
     fstype: '{{ boot_partition.fstype }}'
-  when: boot_mode == 'efi'
+  when: fact_boot_mode == 'efi'

@@ -9,10 +9,10 @@
   community.general.lvol:
     vg: '{{ lvm_partition.vg.name }}'
     lv: '{{ lvm_partition.lv_root.name }}'
-    size: '{{ lv_root_size }}'
+    size: '{{ fact_lv_root_size }}'
 
 - name: Create logical volume for home filesystem
   community.general.lvol:
     vg: '{{ lvm_partition.vg.name }}'
     lv: '{{ lvm_partition.lv_home.name }}'
-    size: '{{ lv_home_size }}'
+    size: '{{ fact_lv_home_size }}'

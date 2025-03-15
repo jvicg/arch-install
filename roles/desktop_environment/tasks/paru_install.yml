@@ -6,25 +6,24 @@
   become: true
   become_user: '{{ user.name }}'
   changed_when: true
-  register: paru_command
 
 - name: Read PKGBUILD again since it changes after building package
   ansible.builtin.set_fact:
-    pkgbuild_info: "{{ lookup('file', pkgbuild_file) }}"
+    fact_pkgbuild_info: "{{ lookup('file', pkgbuild_file) }}"
 
 - name: Register the package name, version and release
   ansible.builtin.set_fact:
-    pkgver: '{{ pkgbuild_info | regex_findall("\npkgver=([^\n]+)") | first }}'
-    pkgname: '{{ pkgbuild_info | regex_findall("\npkgname=([^\n]+)") | first }}'
-    pkgrel: '{{ pkgbuild_info | regex_findall("\npkgrel=([^\n]+)") | first }}'
+    pkgver: '{{ fact_pkgbuild_info | regex_findall("\npkgver=([^\n]+)") | first }}'
+    pkgname: '{{ fact_pkgbuild_info | regex_findall("\npkgname=([^\n]+)") | first }}'
+    pkgrel: '{{ fact_pkgbuild_info | regex_findall("\npkgrel=([^\n]+)") | first }}'
 
 - name: Register the full path of the paru package file
   ansible.builtin.set_fact:
-    paru_package: '{{ paru.install_dir }}/{{ pkgname }}-{{ pkgver }}-{{ pkgrel }}-{{ ansible_architecture }}.pkg.tar.zst'
+    fact_paru_package: '{{ paru.install_dir }}/{{ pkgname }}-{{ pkgver }}-{{ pkgrel }}-{{ ansible_architecture }}.pkg.tar.zst'
 
 - name: Install paru
   community.general.pacman:
-    name: '{{ paru_package }}'
+    name: '{{ fact_paru_package }}'
 
 - name: Delete paru build directory
   ansible.builtin.file:

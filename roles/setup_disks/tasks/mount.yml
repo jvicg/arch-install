@@ -5,7 +5,6 @@
     src: '{{ lvm_lv_root_device }}'
     fstype: '{{ standard_fstype }}'
     state: ephemeral
-  register: root_partition_mount
   changed_when: false
 
 - name: Mount the home partition
@@ -22,5 +21,5 @@
     src: '{{ boot_partition_device }}'
     fstype: '{{ boot_partition.fstype }}'
     state: ephemeral
-  when: boot_mode == 'efi'
+  when: fact_boot_mode == 'efi'
   changed_when: false

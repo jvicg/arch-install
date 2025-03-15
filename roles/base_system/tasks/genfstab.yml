@@ -1,11 +1,12 @@
 ---
 - name: Generate the fstab output
-  ansible.builtin.command: '{{ command.genfstab }}'
+  ansible.builtin.command:
+    cmd: '{{ command.genfstab }}'
   changed_when: false
-  register: genfstab_output
+  register: register_genfstab_output
 
 - name: Write the output of the genfstab command to '{{ file.fstab }}'
   ansible.builtin.lineinfile:
     line: '{{ item }}'
     dest: '{{ file.fstab }}'
-  with_items: '{{ genfstab_output.stdout_lines }}'
+  with_items: '{{ register_genfstab_output.stdout_lines }}'

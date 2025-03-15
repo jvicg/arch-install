@@ -2,9 +2,10 @@
 - name: Check if the base system was already installed
   ansible.builtin.stat:
     path: '{{ file.release }}'
-  register: base_system_installed
+  register: register_base_system_stat
 
 - name: Install the base system
-  ansible.builtin.command: '{{ command.pacstrap }}'
-  when: not base_system_installed.stat.exists
+  ansible.builtin.command:
+    cmd: '{{ command.pacstrap }}'
+  when: not register_base_system_stat.stat.exists
   changed_when: true

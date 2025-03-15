@@ -9,7 +9,7 @@ grub_efi_package_dependencies:
   - os-prober
 
 grub_package_dependencies: >-
-  {{ ['grub'] if boot_mode == 'bios' else grub_efi_package_dependencies }}
+  {{ ['grub'] if fact_boot_mode == 'bios' else grub_efi_package_dependencies }}
 
 grub_mkconfig_command: '{{ chroot_command }} grub-mkconfig -o {{ grub_cfg_path }}'
 grub_efi_install_command: '{{ chroot_command }} grub-install --target=x86_64-efi --efi-directory={{ boot_path }} --bootloader-id=GRUB'

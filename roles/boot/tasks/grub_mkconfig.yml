@@ -1,4 +1,5 @@
 ---
 - name: Make grub cfg
-  ansible.builtin.command: '{{ grub_mkconfig_command }}'
+  ansible.builtin.command:
+    cmd: '{{ grub_mkconfig_command }}'
   changed_when: true

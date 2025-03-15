@@ -5,4 +5,4 @@
     state: present
     update_cache: true
   notify: Enable network manager
-  delegate_to: chroot
+  delegate_to: arch_chroot

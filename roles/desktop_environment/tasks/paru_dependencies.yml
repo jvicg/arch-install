@@ -12,23 +12,24 @@
 # All the information related to paru will be obtained reading the file PKGBUILD
 - name: Read the PKGBUILD file
   ansible.builtin.set_fact:
-    pkgbuild_info: "{{ lookup('file', pkgbuild_file) }}"
+    fact_pkgbuild_info: "{{ lookup('file', pkgbuild_file) }}"
 
-- name: Register the dependencies
+- name: Register the dependencies (for compilation and executing)
   ansible.builtin.set_fact:
-    makedepends: '{{ pkgbuild_info | regex_findall("\nmakedepends=\(([^\n]+)\)") }}'
-    depends: '{{ pkgbuild_info | regex_findall("\ndepends=\(([^\n]+)\)") | first | split(" ") | list }}'
+    fact_depends:
+      make: '{{ fact_pkgbuild_info | regex_findall("\nmakedepends=\(([^\n]+)\)") }}'
+      exec: '{{ fact_pkgbuild_info | regex_findall("\ndepends=\(([^\n]+)\)") | first | split(" ") | list }}'
 
 - name: Concatenate makedepends and depends vars
   ansible.builtin.set_fact:
-    all_depends: '{{ makedepends + depends }}'
+    fact_all_depends: '{{ fact_depends.make + fact_depends.exec }}'
 
 - name: Remove quotes from the dependencies values
   ansible.builtin.set_fact:
-    all_depends: "{{ all_depends | regex_replace(\"'\", \"\") }}"
+    fact_all_depends: "{{ fact_all_depends | regex_replace(\"'\", \"\") }}"
 
 - name: Install paru dependencies
   community.general.pacman:
-    name: '{{ all_depends }}'
+    name: '{{ fact_all_depends }}'
     state: present
     update_cache: true

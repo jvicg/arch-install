@@ -1,6 +1,8 @@
 ---
 # Most of these vars will be obtained through the user input
 package:  # (dynamic var)
+  display_server:
+    name: xorg
   desktop_environment:
     name: gnome
     service: gdm

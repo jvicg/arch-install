@@ -9,6 +9,6 @@
 
 - name: Setup the desktop environment
   hosts:
-    - chroot
+    - arch_chroot
   roles:
     - desktop_environment

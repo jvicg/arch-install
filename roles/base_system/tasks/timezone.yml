@@ -8,9 +8,10 @@
 - name: Check if the hardware clock was already synchronized
   ansible.builtin.stat:
     path: '{{ file.hardware_clock }}'
-  register: hardware_clock_exists
+  register: register_hardware_clock_stat
 
 - name: Set the hardware clock
-  ansible.builtin.command: '{{ command.hwclock }}'
-  when: not hardware_clock_exists.stat.exists
+  ansible.builtin.command:
+    cmd: '{{ command.hwclock }}'
+  when: not register_hardware_clock_stat.stat.exists
   changed_when: true
