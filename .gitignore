@@ -1,4 +1,6 @@
 .*
+facts/
 !.gitignore
 !.ansible-lint
 test_environment/
+*__pycache__*
