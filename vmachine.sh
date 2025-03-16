@@ -27,7 +27,7 @@ usage() {
 
 validate_boot_type() {
   if [[ ! "$1" =~ ^(d|c)$ ]]; then
-    echo "error: invalid boot type '$1'. valid options are 'd' (cdrom) or 'c' (disk)."
+    printf "error: invalid boot type '$1'. valid options are 'd' (cdrom) or 'c' (disk).\n"
     exit 1
   fi
 }
